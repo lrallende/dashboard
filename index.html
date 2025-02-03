@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard de Gastos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard sidebar-hidden">
+    <!-- Sidebar (orden: Inicio, Balance, Registro mensual, Registro auto, Registro TC, Registro Weed) -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h2>Mi Dashboard</h2>
+      </div>
+      <ul class="menu">
+        <li><a href="#" class="menu-item" data-target="home">Inicio</a></li>
+        <li><a href="#" class="menu-item" data-target="balance">Balance</a></li>
+        <li><a href="#" class="menu-item" data-target="registro-mensual">Registro mensual</a></li>
+        <li><a href="#" class="menu-item" data-target="registro-auto">Registro Auto</a></li>
+        <li><a href="#" class="menu-item" data-target="registro-tc">Registro TC</a></li>
+        <li><a href="#" class="menu-item" data-target="registro-weed">Registro Weed</a></li>
+      </ul>
+    </nav>
+    
+    <!-- Botón toggle para la sidebar -->
+    <button id="sidebar-toggle">&#9776;</button>
+    
+    <!-- Área principal -->
+    <main class="main-content">
+      <!-- Sección Inicio -->
+      <section id="home">
+        <div class="container">
+          <h1>Bienvenido a tu Dashboard</h1>
+          <p>Esta es la pantalla principal. Seleccioná una opción en el menú para comenzar.</p>
+        </div>
+      </section>
+      
+      <!-- Sección Balance -->
+      <section id="balance" class="hidden">
+        <div class="container">
+          <h1>Balance</h1>
+          <form id="balance-form">
+            <div class="form-group">
+              <label for="bal-mes">Mes:</label>
+              <select id="bal-mes" required></select>
+            </div>
+            <div class="form-group">
+              <label for="bal-ano">Año:</label>
+              <input type="number" id="bal-ano" required>
+            </div>
+            <button type="submit">Ver Balance</button>
+          </form>
+          <div id="balance-result">
+            <!-- Aquí se mostrará el resumen del balance -->
+          </div>
+        </div>
+      </section>
+      
+      <!-- Sección Registro mensual -->
+      <section id="registro-mensual" class="hidden">
+        <div class="container">
+          <h1>Registro de Gastos Mensuales</h1>
+          <form id="transaction-form">
+            <div class="form-group">
+              <label for="date">Fecha:</label>
+              <input type="date" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+              <label for="month">Mes:</label>
+              <input type="text" id="month" name="month" readonly required>
+            </div>
+            <div class="form-group">
+              <label for="type">Tipo:</label>
+              <select id="type" name="type" required>
+                <option value="income">Ingreso</option>
+                <option value="expense">Egreso</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="category">Categoría:</label>
+              <select id="category" name="category" required>
+                <option value="Servicios">Servicios</option>
+                <option value="Gastos">Gastos</option>
+                <option value="Ahorro">Ahorro</option>
+                <option value="Deudas">Deudas</option>
+                <option value="Auto">Auto</option>
+                <!-- Otras categorías si corresponde -->
+              </select>
+            </div>
+            <!-- Sub-categoría solo si se selecciona "Servicios" -->
+            <div class="form-group" id="subcat-group" style="display: none;">
+              <label for="subcategory">Sub-categoría:</label>
+              <select id="subcategory" name="subcategory">
+                <option value="Luz">Luz</option>
+                <option value="Gas">Gas</option>
+                <option value="ABL">ABL</option>
+                <option value="Expensas">Expensas</option>
+                <option value="Internet/cable">Internet/cable</option>
+                <option value="Telefonia">Telefonia</option>
+                <option value="Streaming">Streaming</option>
+                <option value="Suscripciones">Suscripciones</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="concept">Concepto:</label>
+              <input type="text" id="concept" name="concept" required>
+            </div>
+            <div class="form-group">
+              <label for="amount">Monto:</label>
+              <input type="number" id="amount" name="amount" step="0.01" required>
+            </div>
+            <button type="submit">Agregar</button>
+          </form>
+          <div id="transaction-list">
+            <!-- Tabla de transacciones con columna "Sub-categoría" -->
+          </div>
+        </div>
+      </section>
+      
+      <!-- Sección Registro Auto -->
+      <section id="registro-auto" class="hidden">
+        <div class="container">
+          <h1>Registro Auto</h1>
+          <!-- Información del Auto (no editable desde aquí) en formato de tabla -->
+          <div id="auto-info">
+            <h2>Información del Auto</h2>
+            <table id="auto-info-table">
+              <tr><th>Auto Actual</th><td id="auto-actual">Mi Auto X</td></tr>
+              <tr><th>Kilometraje</th><td id="auto-km">0</td></tr>
+              <tr><th>Fecha de Compra</th><td id="auto-fecha-compra">2020-01-01</td></tr>
+              <tr><th>Nombre del Seguro</th><td id="auto-seguro">Seguro Y</td></tr>
+              <tr><th>Número de Póliza</th><td id="auto-poliza">123456</td></tr>
+              <tr><th>Patente</th><td id="auto-patente">ABC123</td></tr>
+              <tr><th>Medida de Ruedas</th><td id="auto-ruedas">205/55R16</td></tr>
+              <tr><th>Valor del Auto</th><td id="auto-valor">20000</td></tr>
+              <tr><th>Valor Transferencia</th><td id="auto-transferencia">500</td></tr>
+              <tr><th>Luces</th><td id="auto-luces">LED</td></tr>
+            </table>
+          </div>
+          <!-- Formulario de mantenimiento -->
+          <div id="auto-formulario">
+            <h2>Registrar Mantenimiento</h2>
+            <form id="auto-form">
+              <div class="form-group">
+                <label for="auto-date">Fecha:</label>
+                <input type="date" id="auto-date" name="auto-date" required>
+              </div>
+              <div class="form-group">
+                <label for="auto-month">Mes:</label>
+                <input type="text" id="auto-month" name="auto-month" readonly required>
+              </div>
+              <div class="form-group">
+                <label for="auto-tipo">Tipo Mantenimiento:</label>
+                <input type="text" id="auto-tipo" name="auto-tipo" required>
+              </div>
+              <div class="form-group">
+                <label for="auto-detalle">Detalle Mantenimiento:</label>
+                <input type="text" id="auto-detalle" name="auto-detalle">
+              </div>
+              <div class="form-group">
+                <label for="auto-km-nuevo">Kilometraje (opcional):</label>
+                <input type="number" id="auto-km-nuevo" name="auto-km-nuevo">
+              </div>
+              <div class="form-group">
+                <label for="auto-prox-service">Próximo Service (km):</label>
+                <input type="number" id="auto-prox-service" name="auto-prox-service">
+              </div>
+              <div class="form-group">
+                <label for="auto-monto">Monto:</label>
+                <input type="number" id="auto-monto" name="auto-monto" step="0.01">
+              </div>
+              <button type="submit">Agregar</button>
+            </form>
+          </div>
+          <!-- Tabla de mantenimientos -->
+          <div id="auto-records">
+            <!-- Se mostrarán los registros de mantenimiento -->
+          </div>
+        </div>
+      </section>
+      
+      <!-- Sección Registro TC -->
+      <section id="registro-tc" class="hidden">
+        <div class="container">
+          <h1>Registro TC</h1>
+          <!-- Información de la Tarjeta de Crédito -->
+          <div id="tc-info">
+            <h2>Información de la Tarjeta de Crédito</h2>
+            <ul>
+              <li>Mes en Curso: <span id="tc-mes">No definido</span></li>
+              <li>Total a Pagar este Mes: <span id="tc-total-mes">0</span></li>
+              <li>Próximos 3 Meses: <span id="tc-prox-3meses">-</span></li>
+            </ul>
+          </div>
+          <!-- Formulario -->
+          <div id="tc-formulario">
+            <h2>Registrar Compra</h2>
+            <form id="tc-form">
+              <div class="form-group">
+                <label for="tc-date">Fecha:</label>
+                <input type="date" id="tc-date" name="tc-date" required>
+              </div>
+              <div class="form-group">
+                <label for="tc-descripcion">Descripción:</label>
+                <input type="text" id="tc-descripcion" name="tc-descripcion" required>
+              </div>
+              <div class="form-group">
+                <label for="tc-monto-compra">Monto de Compra:</label>
+                <input type="number" id="tc-monto-compra" name="tc-monto-compra" step="0.01" required>
+              </div>
+              <div class="form-group">
+                <label for="tc-cuotas">Cantidad de Cuotas:</label>
+                <input type="number" id="tc-cuotas" name="tc-cuotas" required>
+              </div>
+              <div class="form-group">
+                <label for="tc-monto-cuota">Monto de Cada Cuota:</label>
+                <input type="number" id="tc-monto-cuota" name="tc-monto-cuota" step="0.01" readonly>
+              </div>
+              <div class="form-group">
+                <label for="tc-mes-primer">Mes Primer Cuota:</label>
+                <input type="text" id="tc-mes-primer" name="tc-mes-primer" required>
+              </div>
+              <button type="submit">Agregar</button>
+            </form>
+          </div>
+          <!-- Tabla de compras (se incluye columna "Cuota Actual") -->
+          <div id="tc-records">
+            <!-- Se mostrarán los registros de TC -->
+          </div>
+        </div>
+      </section>
+      
+      <!-- Sección Registro Weed -->
+      <section id="registro-weed" class="hidden">
+        <div class="container">
+          <h1>Registro Weed</h1>
+          <form id="weed-form">
+            <div class="form-group">
+              <label for="weed-date">Fecha:</label>
+              <input type="date" id="weed-date" name="weed-date" required>
+            </div>
+            <div class="form-group">
+              <label for="weed-descripcion">Descripción:</label>
+              <input type="text" id="weed-descripcion" name="weed-descripcion">
+            </div>
+            <div class="form-group">
+              <label for="weed-vendedor">Vendedor:</label>
+              <input type="text" id="weed-vendedor" name="weed-vendedor" required>
+            </div>
+            <div class="form-group">
+              <label for="weed-cantidad">Cantidad:</label>
+              <input type="number" id="weed-cantidad" name="weed-cantidad" required>
+            </div>
+            <div class="form-group">
+              <label for="weed-monto">Monto:</label>
+              <input type="number" id="weed-monto" name="weed-monto" step="0.01" required>
+            </div>
+            <button type="submit">Agregar</button>
+          </form>
+          <div id="weed-records">
+            <!-- Se mostrarán los registros de Weed -->
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
