@@ -884,4 +884,25 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-  
+document.addEventListener('DOMContentLoaded', () => {
+  const exportBtn = document.getElementById('export-json-btn');
+
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      const data = {
+        transactions: JSON.parse(localStorage.getItem('transactions')) || [],
+        autoRecords: JSON.parse(localStorage.getItem('autoRecords')) || [],
+        autoInfo: JSON.parse(localStorage.getItem('autoInfo')) || {},
+        tcRecords: JSON.parse(localStorage.getItem('tcRecords')) || [],
+        weedRecords: JSON.parse(localStorage.getItem('weedRecords')) || []
+      };
+
+      const jsonString = JSON.stringify(data, null, 2);
+      const blob = new Blob([jsonString], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `dashboard_data_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+    });
+  }
+});  
